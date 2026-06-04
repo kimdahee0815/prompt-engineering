@@ -4,8 +4,10 @@ from dotenv import load_dotenv
 from agents import Runner
 import asyncio
 
+load_dotenv()
+    
 @function_tool
-def make_interview_question(role, difficulty):
+def make_interview_question(role:str, difficulty:str) -> str:
     """지원 직무와 난이도를 받아 면접 질문 1개를 만듭니다.
     Args:
         role: 지원 직무 이름입니다. 예: 백엔드 신입, 데이터 분석 신입
@@ -33,8 +35,6 @@ async def main():
     # print(interview_agent.name)
     # print(interview_agent.tools)
 
-    load_dotenv()
-
     result = await Runner.run(
         interview_agent,
         "백엔드 신입 지원자에게 줄 기초 면접 질문을 도구를 사용해서 하나 만들어 주세요."
@@ -44,3 +44,10 @@ async def main():
     
 if __name__ == "__main__":
     asyncio.run(main())
+    
+# 도구 정의: 파이썬 함수 + @function_tool,
+# 호출 판단: Agent instructions + Runner 실행 흐름
+# 인자 해석: 함수 타입 (def make_interview_question(role:str, difficulty:str) -> str) 타입 힌트가 SDK schema 생성
+# 함수 실행: Runner가 등록 도구를 호출
+# 최종 응답: result.final_output 확인
+# 개발자 책임: "도구 설명, 로그, 에러 분류, 보안"

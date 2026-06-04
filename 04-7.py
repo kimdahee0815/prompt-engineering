@@ -1,8 +1,9 @@
 # 다중 tool 사용 방법
 # make_interview_question, score_interview_answer, suggest_follow_up_question
 
-from agents import Agent
+from agents import Agent, Runner
 from agents import function_tool
+from dotenv import load_dotenv
 
 @function_tool
 def make_interview_question(role: str) -> str:
@@ -26,3 +27,13 @@ agent = Agent(
     ),
     tools=[make_interview_question, score_interview_answer]
 )    
+
+load_dotenv()
+
+result = Runner.run_sync(
+    agent,
+    "백엔드 신입 지원자에게 줄 기초 면접 질문을 도구를 사용해서 하나 만들어 주세요.",
+    "백엔드 신입 지원자가 제출 한 답변을 간단하게 도구를 사용해서 채점하세요. \n답변: 팀 프로젝트에서 결제 오류를 3일동안 추적해 수정했습니다."
+)
+
+print(result.final_output)

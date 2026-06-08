@@ -1,6 +1,6 @@
 """tools.py - 면접 코치 도구 함수"""
 
-from roles import get_role
+from role import get_role
 
 def make_interview_question(role_key: str, difficulty: str = "기초") -> str:
     """
